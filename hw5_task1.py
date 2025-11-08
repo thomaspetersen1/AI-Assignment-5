@@ -25,11 +25,15 @@ label_test = data[n-num_test:,-1]
 
 # --- Your Task --- #
 # pick a proper number of iterations 
-num_iter = ...
-# randomly initialize your w 
-w = ...
+num_iter = 2000
+# randomly initialize your w (starting at 0 so w can get more reasonable values)
+w = np.zeros(p-1)
+# scalar bias
+b = 0.0
+# learning rate
+alpha = .01
 # --- end of task --- #
-
+    
 er_test = []
 
 
@@ -38,14 +42,33 @@ er_test = []
 # at the end of each iteration, evaluate the updated w 
 for iter in range(num_iter): 
 
+    # ypred = Xw where x is the sample matrix and w is current slope of weights
+    # Note: scikit learn uses a bias therefore my ypred is forcing the origin and affecting my MSE
+    # ypred = Xw + b
+
+    y_pred = sample_train @ w + b # matrix multiplication with training data
+
+    # compute gradient = (2/N) * (X.T @ (X @ w - y))
+    # the same thing as calculating the partial derivative for each weight value
+
+    error = y_pred - label_train
+
+    gradient_w = (2 / num_train) * (sample_train.T @ error)
+    gradient_b = (2 / num_train) * np.sum(error)
+
     ## update w
-    # ......
-    # ......
-    # ......
+    # update using gradient descent w = w - alpha * gradient
+
+    w = w - alpha * gradient_w
+    b = b - alpha * gradient_b
 
     ## evaluate testing error of the updated w 
     # we should measure mean-square-error here
-    er = ......
+
+    y_pred_test = sample_test @ w + b
+
+    # calculate MSE
+    er = np.mean((y_pred_test - label_test)**2)
     er_test.append(er)
 # --- end of task --- #
     
@@ -53,6 +76,6 @@ plt.figure()
 plt.plot(er_test)
 plt.xlabel('Iteration')
 plt.ylabel('Classification Error')
-
-
-
+plt.title("Figure 1: Linear Regression")
+print ("Final MSE: ", er_test[-1])
+plt.show()
