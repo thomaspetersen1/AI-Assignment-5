@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # --- Your Task --- #
 # import libraries as needed 
-# .......
+from sklearn.ensemble import RandomForestClassifier
 # --- end of task --- #
 
 # -------------------------------------
@@ -25,7 +25,7 @@ label_test = data[n-num_test:,-1]
 
 # --- Your Task --- #
 # pick five values of m by yourself 
-m_values = [1,1,1,1,1]
+m_values = [1,5,10,25,50]
 # --- end of task --- #
 
 er_test = []
@@ -33,11 +33,15 @@ for m in m_values:
     # --- Your Task --- #
     # implement the random forest classification method 
     # you can directly call "RandomForestClassifier" from the scikit learn library
-    # ......
-    # ......
-    # ......
+    
+    # create random forest with m trees
+    RLC = RandomForestClassifier(n_estimators=m, random_state=0)
+    RLC.fit(sample_train, label_train)
+
+    predictions = RLC.predict(sample_test)
+
     # store classification error on testing data here 
-    er = ......
+    er = np.mean(predictions != label_test)
     er_test.append(er)
 # --- end of task --- #
     
@@ -45,6 +49,8 @@ plt.figure()
 plt.plot(er_test)
 plt.xlabel('m')
 plt.ylabel('Classification Error')
+plt.title('Figure 6: Random Forest Performance vs Number of Trees')
+plt.show()
 
 
 
