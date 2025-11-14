@@ -6,3 +6,6 @@ https://www.youtube.com/watch?v=Jj7WD71qQWE
 
 Task2 Logistic Regression:
 https://www.youtube.com/watch?v=3giTXZbyf1Q
+
+Task3 Kmeans Clustering:
+https://www.youtube.com/watch?v=6UF5Ysk_2gk&t=766s
