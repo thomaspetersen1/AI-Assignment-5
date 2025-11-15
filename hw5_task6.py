@@ -49,7 +49,7 @@ plt.figure()
 plt.plot(er_test)
 plt.xlabel('m')
 plt.ylabel('Classification Error')
-plt.title('Figure 6: Random Forest Performance vs Number of Trees')
+plt.title('Figure 7: Random Forest Performance vs Number of Trees')
 plt.show()
 
 
