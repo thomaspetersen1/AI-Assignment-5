@@ -55,12 +55,23 @@ print(er_gap)
 # --- Your Task --- #
 # now, implement whatever method you choose 
 # aim to reduce the gap between two errors 
-# ......
-# ......
-# ......
+
+# my method is to reduce the threshold of acceptance for the group with higher error
+male_threshold = .4
+female_threshold = .5
+
+# from the model, get the probabilities. 2nd column = probability of label = 1
+probs = model.predict_proba(sample_test)[:,1]
+
+# initialize label_pred back to 0
+label_pred = np.zeros_like(probs)
+# assign each index with its corresponding class. Convert boolean to 1 or 0
+label_pred[idx_male] = (probs[idx_male] >= male_threshold).astype(int)
+label_pred[idx_female] = (probs[idx_female] >= female_threshold).astype(int)
+
 # whatever method you have, store your model prediction 
 # on testing set in "label_pred". Then run the following code
-label_pred = model.predict(sample_test)
+# label_pred = model.predict(sample_test)
 idx_female = np.where(sample_test[:,0]==1)[0]
 idx_male = np.where(sample_test[:,0]==0)[0]
 er_female = 1-accuracy_score(label_test[idx_female],label_pred[idx_female])
